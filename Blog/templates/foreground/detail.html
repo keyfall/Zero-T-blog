@@ -1,0 +1,60 @@
+{% extends 'foreground/base.html' %}
+
+{# title #}
+{% block title %}detaile page{% endblock %}
+
+
+{# content #}
+{% block content %}
+                <div class="col-lg-8">
+                    <style>
+pre{
+    background: #282c34;
+}
+pre code{
+    color:#abb2bf;
+}
+                    </style>
+                    <div class="panel pannel-detail">
+                        <div class="detail-top">
+                            <h2>git同时推送gitee和github</h2>
+                            <div class="row row-info row-detail">
+                                <span class="articel-label"><a href="/tags-1-12-1.html">git</a></span>
+                                <span class="time">2019-10-29</span>
+                                <span class="views">浏览（<a href="javascript:;">500</a>）</span>
+                                <span class="comment f_r">评论（<a href="javascript:;">0</a>）</span>
+                            </div>
+                        </div>
+                        <div class="article-detail" style="">
+                            <h3>一键git push origin master 同时推送gitee和github</h3>
+                            <pre><code>1.先把本地ssh，放到gitee和github里面(查看自己的~/.ssh/id_rsa.pub,把这个放到gitee和github)
+
+2.在本地项目中git .init初始化git
+
+3.先添加gitee(主要是国内的快一些),git remote add origin git@gitee.com:this_summer/yii2-blog.git
+
+4.再增加github，git remote set-url --add origin git@github.com:645561618/yii2-blog.git
+
+5.查看：git remote -v 
+    origin	git@gitee.com:this_summer/yii2-blog.git (fetch)
+    origin	git@gitee.com:this_summer/yii2-blog.git (push)
+    origin	git@github.com:645561618/yii2-blog.git (push)
+
+6.添加github可以直接在config里面配置，找到config文件，该文件在项目目录下的./git/config里面配置,配置如下：
+    [core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+    [remote "origin"]
+        url = git@gitee.com:this_summer/yii2-blog.git
+        url = git@github.com:645561618/yii2-blog.git（增加这条，就可以不用操作第四条命令）
+        fetch = +refs/heads/*:refs/remotes/origin/*
+                            </code></pre>
+                            <wb:like appkey="IbGu2"><div class="WB_widget WB_praise" node-type="outer"><div class="praise_btn_line" node-type="inner"><a node-type="likeBtn" action-type="like" action-data="type=like" href="javascript:;" class="praise_btn status_origin "><cite class="praise_btn_inner"><u class="WB_ico_logo"></u><cite class="praise_text">赞</cite></cite></a><cite class="praise_intro" node-type="text">   赶快成为第一个赞的人吧
+                                    </cite><div class="related_list_container" node-type="face"></div></div></div></wb:like>
+                        </div>
+                    </div>
+                    </div>
+
+                    {% endblock %}

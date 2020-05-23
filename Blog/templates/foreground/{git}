@@ -1,0 +1,44 @@
+{% extends 'foreground/base.html' %}
+
+{# title #}
+{% block title %}welcome home{% endblock %}
+
+
+
+{# content #}
+{% block content %}
+<div class="col-md-8">
+    <div class="panel" style="box-shadow: 2px 2px 2px 2px #E2E2E2;">
+        <div class="panel-title box-title">
+            <span>热门文章</span>
+        </div>
+        <div class="new-list">
+            <div class="blogs">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-xs-12"><a>
+                            {% for blog in blogs %}
+                        </a><h3 style="margin-top:t8px;"><a></a><a class="atitle" target="_blank" title="git同时推送gitee和github" href="/detail-107-10-1.html">{{ blog.title }}</a></h3>
+                        <!--<p class="adesc">### 一键git push origin master 同时推>送gitee和github
+
+                            1.先把本地ssh，放到gitee和github里面(查看自己的~/.ssh/id_rsa.pub,把这个放到gitee和github)
+
+                            2.在本地项目中git .init...</p>-->
+                            <p class="adesc">
+                                {{ blog.content | truncate(100) }}
+                            </p>
+                            <div class="row row-info">
+                                <span class="articel-label col-lg-2 col-md-2 col-xs-6"><a href="/tags-1-12-1.html">{{ blog.keyword }}</a></span>
+                                <span class="views col-lg-7 col-md-2 col-xs-6">浏览
+                                    （<a href="javascript:;">{{blog.see}}</a>）</span>
+                                <span class="time col-lg-3 col-md-3 col-xs-6">{{blog.updatetime.strftime('%Y-%m-%d')}}</span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page"><span class="paging_number">1</span><a class="paging_number" href="?p=2">2</a> <a href="?p=2">下一页</a> </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

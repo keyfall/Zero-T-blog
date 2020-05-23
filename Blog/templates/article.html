@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
+    <form action="/Article/checkAll" method="post" >
+        <h1 class="page-header">操作</h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ url_for('html') }}">增加文章</a>
+            </li>
+            {% for category, message in get_flashed_messages(with_categories = true) %}
+            <li>
+                {{ message  }}
+            </li>
+            {% endfor %}
+        </ol>
+        <h1 class="page-header">管理 <span class="badge">7</span></h1>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">标题</span></th>
+                        <th><span class="glyphicon glyphicon-list"></span> <span class="visible-lg">关键字</span></th>
+                        <th class="hidden-sm"><span class="glyphicon glyphicon-tag"></span> <span class="visible-lg">浏览量</span></th>
+                        <th class="hidden-sm"><span class="glyphicon glyphicon-comment"></span> <span class="visible-lg">描述</span></th>
+                        <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">日期</span></th>
+                        <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
+                    </tr>
+                </thead>
+                <tbody id='tbo'>
+                    {% for blog in blogs %}
+                    <tr class={{blog.id}}>
+                        <td class="article-title">{{ blog.title }}</td>
+                        <td>{{ blog.keyword }}</td> 
+                        <td class="hidden-sm">{{ blog.see }}</td>
+                        <td class="hidden-sm">{{ blog.description }}</td>
+                        <td>{{ blog.updatetime.strftime("%Y-%m-%d")   }}</td>
+                        <td><a href="{{url_for('article_id',aid=blog.id)}}"  >修改</a> <a onclick="deletea({{blog.id}})" rel="6">删除</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <footer class="message_footer">
+            <nav>
+                <div class="btn-toolbar operation" role="toolbar">
+                </div>
+                <ul class="pagination pagenav">
+                    {% if paginate.has_prev %}
+                    <li class="disabled"><a  href = "/article?page={{ paginate.prev_num  }}"> &laquo; </a> </li>
+                    {% endif %}
+
+                    {% for i in paginate.iter_pages() %}
+                    <li><a href="/article?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+
+                    {% if paginate.has_next %}
+                    <li><a href="/article?page={{ paginate.next_num }}" > &raquo; </a> </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </footer>
+    </form>
+</div>
+<script type="text/javascript">
+        function deletea(id){
+            $.ajax({
+                url: '/article/'+id, 
+                type:'DELETE',
+                dataType:'json',
+                success:function(result){
+                    alert('ok');
+                    
+                    var deleteaa = $('#tbo').children('tr.'+id) 
+                    deleteaa.remove()
+                },
+
+                error:function(data){
+                    alert("请求出错");
+                }
+                    
+            });
+            alert("传输中")
+        };
+
+</script>
+
+{% endblock %}
